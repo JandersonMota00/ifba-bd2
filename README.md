@@ -12,8 +12,8 @@
 <table>
   <tr>
     <td align="center">
-      <img src="https://avatars.githubusercontent.com/u/80362674?v=4" width="100px;" alt="Foto do Integrante Jabes"/><br />
-      <sub><b><a href="https://github.com/">Jabes</a></b></sub>
+      <img src="https://avatars.githubusercontent.com/u/118413268?v=4" width="100px;" alt="Foto do Integrante Jabes"/><br />
+      <sub><b><a href="https://github.com/MrJabes762">Jabes Cajazeira</a></b></sub>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/80362674?v=4" width="100px;" alt="Foto do Integrante Janderson"/><br />
@@ -21,7 +21,7 @@
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/129338943?v=4" width="100px;" alt="Foto da Integrante Ronaldo"/><br />
-      <sub><b><a href="https://github.com/Ronaldo-Correia">Ronaldo</a></b></sub>
+      <sub><b><a href="https://github.com/Ronaldo-Correia">Ronaldo Correia</a></b></sub>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/114778311?v=4" width="100px;" alt="Foto d0 Integrante Salvador"/><br />
