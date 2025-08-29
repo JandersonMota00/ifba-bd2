@@ -1,4 +1,5 @@
-# Trabalho Walmart
+# Trabalho: Dados Publicos de Comércio Eletrônico Brasileiro - Loja Olist
+
 - **Instituição:** Instituto Federal da Bahia (IFBA)
 - **Curso:** Análise e Desenvolvimento de Sistemas (ADS)
 - **Disciplina:** Banco de Dados II
@@ -39,16 +40,18 @@
 [Trabalho BD2.pdf](https://github.com/user-attachments/files/21988418/Trabalho.BD2.pdf)
 
 ## Sobre o projeto
-O dataset utilizado é proveniente da empresa Walmart, que forneceu dados de 45 lojas, incluindo informações cadastrais e registros de vendas mensais.
 
-O objetivo do trabalho é analisar o impacto das festividades no volume de vendas e desenvolver um modelo preditivo capaz de estimar as vendas de cada loja em um determinado mês.
+Este trabalho se apoia no Brazilian E-Commerce Public Dataset, publicado pela Olist, contendo mais de 100 mil pedidos realizados entre 2016 e 2018 nos marketplaces brasileiros. A profundidade do dataset — com atributos como status do pedido, preço, pagamento, desempenho do frete, localização do cliente, atributos do produto e avaliações, revela um ecossistema rico e minuncioso o qual fundamenta o estudo.
 
-🔗 Link do dataset: [Walmart - Kaggle](https://www.kaggle.com/datasets/uelitonviana/walmart)
+Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pedidos, identificar sazonalidades e alimentar previsões robustas sobre demandas futuras.
+
+🔗 Link do dataset: [Brazilian E-Commerce Olist - Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce?select=olist_customers_dataset.csv)
 
 ## Ferramentas
 - SQL Server
 
 ## Itens
+
 ### 1. Modelagem e Implementação
 
 ### 2. Auditoria e Segurança
