@@ -55,6 +55,7 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 
 ## Ferramentas
 - SQL Server
+- SQL Server Management Studio ^19
 
 ---
 
@@ -94,9 +95,9 @@ USE [TrabalhoBD2]
 
 Feito a primeira etapa, para subir as tabelas para o banco existem diversas estratégias. Isso inclui: 
 
-  1. Subir Automaticamente as tabelas **via flat file, e dentre outras formas de importação** a denpender da natureza dos datasheets. 
+  1. **Flat File, Import Data...** - Subir Automaticamente as tabelas **via flat file, e dentre outras formas de importação** a depender da natureza dos datasheets. 
   
-  2. Vale a pena ressaltar que, a  anterior é eficiente na maioria dos casos as excessões são para casos em que as tabelas não são facilmente identificadas. Nesse sentido, é aplicavel o metodo de **Burk Insert**, que em sintese se resume a criar a tabela no banco pegando as colunas e suas tipagems de cada datasheet e criar o comando **BULK INSERT**, passando a referencia da tabela criada `FROM './datasheet/product_category_name_translation.csv'`, caminho do CSV `FROM './datasheet/product_category_name_translation.csv'` e as configurações de inserção necessarias para reconhecer o datasheet e subir os dados.
+  2. **Burk Insert** -  Vale a pena ressaltar que a estratégia anterior é eficiente na maioria dos casos, as excessões são para casos em que as tabelas não são facilmente identificadas. Nesse sentido, é aplicavel o metodo de **Burk Insert**, que em sintese se resume a criar a tabela no banco pegando as colunas e suas tipagems de cada datasheet e criar o comando **BULK INSERT**, passando a referencia da tabela criada `FROM './datasheet/product_category_name_translation.csv'`, caminho do CSV `FROM './datasheet/product_category_name_translation.csv'` e as configurações de inserção necessarias para reconhecer o datasheet e subir os dados.
 
   ```Burk Insert exemplo
 BULK INSERT dbo.product_category_name_translation
