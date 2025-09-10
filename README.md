@@ -8,6 +8,8 @@
 - **Semestre:** 5
 - **Ano:** 2025.1
 
+---
+
 ## Integrantes do Projeto
 
 <table>
@@ -35,6 +37,8 @@
   </tr>
 </table>
 
+---
+
 ## Lista
 
 [Trabalho BD2.pdf](https://github.com/user-attachments/files/21988418/Trabalho.BD2.pdf)
@@ -47,12 +51,73 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 
 🔗 Link do dataset: [Brazilian E-Commerce Olist - Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce?select=olist_customers_dataset.csv)
 
+---
+
 ## Ferramentas
 - SQL Server
+
+---
+
+## Estrutura do Repositorio
+
+| Diretório | Descricao |
+| ---------- | ---------|
+|`./datasheets` | **Diretorio que contem os datasheets base** |
+|`./modelagemInplementacao/modelagem` | **Diretorio que contem os scripts de modelagem do banco e inserção via BurkInsert** |
+
+
+---
 
 ## Itens
 
 ### 1. Modelagem e Implementação
+
+#### 1.1. Modelagem 
+
+- Mediante downloads dos datasheets necessarios para realizar a tarefa de modelar e implementar, é necessario inicialmente criar um banco de dados e subir os todas
+
+```Criacao
+
+CREATE DATABASE TrabalhoBD2
+
+```
+
+
+
+Em seguida "setar" o banco de dados 
+
+
+```Criacao
+USE [TrabalhoBD2]
+
+```
+
+Feito a primeira etapa, para subir as tabelas para o banco existem diversas estratégias. Isso inclui: 
+
+  1. Subir Automaticamente as tabelas **via flat file, e dentre outras formas de importação** a denpender da natureza dos datasheets. 
+  
+  2. Vale a pena ressaltar que, a  anterior é eficiente na maioria dos casos as excessões são para casos em que as tabelas não são facilmente identificadas. Nesse sentido, é aplicavel o metodo de **Burk Insert**, que em sintese se resume a criar a tabela no banco pegando as colunas e suas tipagems de cada datasheet e criar o comando **BULK INSERT**, passando a referencia da tabela criada `FROM './datasheet/product_category_name_translation.csv'`, caminho do CSV `FROM './datasheet/product_category_name_translation.csv'` e as configurações de inserção necessarias para reconhecer o datasheet e subir os dados.
+
+  ```Burk Insert exemplo
+BULK INSERT dbo.product_category_name_translation
+FROM './datasheet/product_category_name_translation.csv'
+WITH (
+    FORMAT = 'CSV',
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '0x0a',
+    KEEPNULLS,
+    DATAFILETYPE = 'char',
+    CODEPAGE = '65001',
+    MAXERRORS = 1,
+    BATCHSIZE = 1000
+);
+GO
+
+```
+
+
+---
 
 ### 2. Auditoria e Segurança
 
