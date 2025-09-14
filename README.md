@@ -122,4 +122,88 @@ GO
 
 ### 2. Auditoria e Segurança
 
+#### 2.1. Mecanismos de Auditoria
+.
+.
+.
+#### 2.2. Configuração de Usuário Auditor
+
+Foi criado o login aud123 com senha segura, vinculado ao usuário AuditorUser no banco TrabalhoBD2. Esse usuário foi adicionado à role db_auditor, com as seguintes permissões:
+
+✅ Permissão de leitura na tabela audit.ChangeLog
+
+❌ Negado acesso (SELECT, INSERT, UPDATE, DELETE) às tabelas operacionais:
+
+-- 2.2.1 Criar login do auditor:
+```
+CREATE LOGIN aud123
+  WITH PASSWORD = 'Aud!t0r#2025';
+GO
+```
+
+-- 2.2.2 Criar Usuário do banco de dados
+```
+USE [TrabalhoBD2];
+GO
+```
+-- 2.2.3 Cria o usuário de banco para o login aud123
+```
+IF NOT EXISTS (
+  SELECT 1
+  FROM sys.database_principals
+  WHERE name = 'AuditorUser'
+)
+  CREATE USER AuditorUser
+    FOR LOGIN aud123;
+GO
+```
+-- 2.2.4 Cria a role de auditor (se ainda não existir)
+```
+IF NOT EXISTS (
+  SELECT 1
+  FROM sys.database_principals
+  WHERE name = 'db_auditor' AND type = 'R'
+)
+  CREATE ROLE db_auditor;
+GO
+```
+-- 2.2.5 Adiciona o usuário à role
+```
+ALTER ROLE db_auditor
+  ADD MEMBER AuditorUser;
+GO
+
+-- 3 Permissões do usuário 
+-- 3.1Permitir apenas leitura na tabela de logs
+GRANT SELECT
+  ON audit.ChangeLog
+  TO db_auditor;
+GO
+```
+-- 2.2.6 Negar acesso às tabelas operacionais
+```
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_customers_dataset       TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_orders_dataset          TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_geolocation_dataset          TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_order_payments_dataset          TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_order_reviews_dataset          TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_products_dataset          TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_sellers_dataset          TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.product_category_name_translation        TO db_auditor;
+DENY SELECT, INSERT, UPDATE, DELETE
+  ON dbo.olist_order_items_dataset          TO db_auditor;
+GO
+```
+#### 2.3 Estratégia de Backup e Replicação
+.
+.
+.
 ### 3. Data Warehouse e OLAP
