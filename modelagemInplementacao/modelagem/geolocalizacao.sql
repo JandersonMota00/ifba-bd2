@@ -1,17 +1,18 @@
 USE [TrabalhoBD2]
 GO
 
-CREATE TABLE [dbo].[olist_geolocation_dataset](
-	[geolocation_zip_code_prefix] [varchar](20) NOT NULL,
+CREATE TABLE [dbo].[geolocalizacao](
+	[geolocation_zip_code_prefix] [nvarchar](20) NOT NULL,
 	[geolocation_lat] [float] NULL,
 	[geolocation_lng] [float] NULL,
-	[geolocation_city] [varchar](100) NOT NULL,
+	[geolocation_city] [nvarchar](100) NOT NULL,
 	[geolocation_state] [char](2) NOT NULL
 ) ON [PRIMARY]
 GO
 
-BULK INSERT dbo.olist_geolocation_dataset
-FROM './datasheet/olist_geolocation_dataset.csv'
+
+BULK INSERT dbo.geolocalizacao
+FROM './olist_geolocation_dataset.csv'
 WITH (
     FORMAT = 'CSV',
     FIRSTROW = 2,
