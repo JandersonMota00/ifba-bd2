@@ -117,6 +117,11 @@ GO
 
 ```
 
+#### 1.2. Normalização 
+
+![Modelagem Relacional Banco De Dados](../ifba-bd2/modelagemInplementacao/diagramaRelacionalBancoDeDados/Diagrama%20Relacional%20do%20Banco%20de%20Dados.png)
+
+A imagem anterior descreve a modelagem do banco de e suas possivels relações. Entretanto, observando os dados, nos tempos possiveis inconsistências no que tange a duplicidade dos dados. Nesse sentido, tendo em vista que a natureza destes dados não afetam consideravelmente o datasheet, é realizada a exclusão destes dados.
 
 ---
 
