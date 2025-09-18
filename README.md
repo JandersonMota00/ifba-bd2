@@ -208,38 +208,24 @@ DENY SELECT, INSERT, UPDATE, DELETE
 GO
 ```
 #### 2.3 Estratégia de Backup e Replicação
-.
+
 #### Estratégia de Backup
-A estratégia de backup visa garantir a recuperação total dos dados em caso de falhas críticas, como corrupção do banco de dados, falhas de hardware ou exclusão acidental.
+Nossa estratégia de backup foi projetada para garantir que nenhum dado sensível — como pedidos, pagamentos, informações de frete ou avaliações de clientes — seja perdido em caso de falha. Para um marketplace como a Olist, que processa milhares de transações diariamente, perder dados de um único dia pode significar um grave prejuízo financeiro e uma quebra irreparável de confiança com vendedores e clientes.
 
-**Backup Completo (Full Backup):**
-* Horário: Toda segunda-feira, à 01:00 AM (horário de menor tráfego).
-* Frequência: Semanal.
-* Armazenamento: Os arquivos de backup serão salvos em um disco local separado do servidor principal e, em seguida, uma cópia será transferida para um serviço de armazenamento em nuvem (ex: Google Cloud Storage) para seguir a regra 3-2-1 de ter uma cópia off-site.
+* **Backup Completo:** Uma cópia completa de todos os dados do banco será realizada semanalmente. Este backup serve como a base mais segura para restaurações de grande escala.
+* **Backup Diferencial:** Para capturar as alterações diárias, serão realizados backups diferenciais todos os dias, durante a madrugada. Isso garante que, em caso de falha, possamos restaurar os dados com pouca ou nenhuma perda, utilizando o último backup completo mais o backup diferencial mais recente.
 
-**Backup Diferencial:**
-* Horário: De terça-feira a domingo, à 01:00 AM.
-* Frequência: Diária.
-* Armazenamento: Serão salvos localmente e replicados para a nuvem.
-* Justificativa: Esta abordagem otimiza o tempo de backup e o espaço de armazenamento, pois somente as alterações feitas desde o último backup completo são salvas. Em caso de necessidade, a restauração seria feita com o último backup completo e o último backup diferencial, tornando o processo mais rápido do que com backups incrementais.
+#### Estratégia de Replicação Master-Slave
+A replicação é crucial para a alta disponibilidade e para a distribuição de carga de trabalho do banco de dados da Olist.
 
-#### Estratégia de Replicação
-A estratégia de replicação visa garantir a alta disponibilidade do sistema e distribuir a carga de leitura para suportar picos de tráfego, como os mencionados nos dados de sazonalidade.
+* **Servidor Master:** Este servidor será o único responsável por todas as operações de escrita, como o processamento de novos pedidos. Isso assegura que a performance do sistema de checkout e registro de transações não seja impactada por outras atividades.
+* **Servidores Slaves:** As réplicas do banco de dados (slaves) terão a função de lidar com toda a carga de leitura. Isso é vital para a Olist, pois permite que consultas analíticas (como relatórios de vendas, desempenho de frete e análises de sazonalidade) sejam executadas sem sobrecarregar o servidor principal. Assim, a equipe de análise de dados pode trabalhar sem afetar a experiência do cliente que está comprando.
 
-**Modelo de Replicação: Master-Slave Assíncrona.**
-**Componentes:**
-
-* **Servidor Master (Escrita):** O servidor principal, responsável por todas as operações de escrita (inserção de pedidos, atualização de estoque, etc.).
-
-* **Servidores Slaves (Leitura):** No mínimo dois servidores de réplica que recebem os dados do master quase em tempo real. Eles serão dedicados a operações de leitura (pesquisas de produtos, visualização de status de pedidos e, principalmente, as consultas analíticas do seu trabalho, como a identificação de padrões e sazonalidade).
-
-Fluxo de Dados e Carga:
-
-1. Toda transação de escrita (ex: um cliente finaliza um pedido) é processada pelo servidor master.
-2. O master envia os dados para os slaves de forma assíncrona, garantindo que o cliente não precise esperar que a réplica seja concluída.
-3. Toda consulta de leitura (ex: o cliente acessa a página de um produto) é direcionada para um dos servidores slaves, aliviando a carga do master.
-
-**Failover (Plano de Contingência):**
-Em caso de falha do servidor master, um dos slaves será automaticamente promovido a master. Isso minimiza o tempo de inatividade do sistema, permitindo que o e-commerce continue operando com interrupção mínima.
+#### Benefícios da Estratégia para o Marketplace Olist
+* **Alta Disponibilidade e Continuidade do Negócio:** Para um marketplace nacional que conecta múltiplos vendedores e clientes, o tempo de inatividade significa vendas perdidas e insatisfação para toda a cadeia. A replicação garante que, se o servidor principal (master) cair, o site continue processando pedidos e exibindo o status de entrega, mantendo o negócio em funcionamento.
+* **Integridade e Disponibilidade dos Dados:** Graças a esta estratégia de backup e replicação, os dados do dataset Olist — incluindo pedidos, pagamentos e avaliações — permanecem íntegros e sempre disponíveis para serem usados em diferentes partes do seu trabalho, como:
+* **Auditoria:** Os logs de alterações podem ser consultados sem impactar a operação principal.
+* **Análises OLAP:** As consultas complexas para o seu Data Warehouse podem ser executadas nos servidores slaves, garantindo que a análise não interfira no processamento de novos pedidos.
+* **Estudos de Comportamento do Consumidor:** Os dados históricos estarão sempre disponíveis para alimentar estudos sobre padrões de compra e previsões de demanda.
 .
 ### 3. Data Warehouse e OLAP
