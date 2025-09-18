@@ -131,7 +131,7 @@ A imagem anterior descreve a modelagem do banco de e suas possivels relações. 
 
 Para registrar de forma automática todas as operações de inserção, atualização e exclusão, criamos uma tabela de auditoria chamada audit.ChangeLog e um conjunto de triggers DML em cada tabela alvo. Sempre que alguém faz um INSERT, UPDATE ou DELETE, o respectivo trigger dispara e insere um registro na ChangeLog sem alterar a tabela operacional.
 
-##### Estrutura da tabela audit.ChangeLog
+#### Estrutura da tabela audit.ChangeLog
 A tabela de logs contém colunas que capturam:
 
 - TableName: nome da tabela onde a alteração ocorreu
@@ -143,7 +143,7 @@ A tabela de logs contém colunas que capturam:
 - ChangedBy: login do usuário que executou a operação
 - ChangedAt: data e hora em que o trigger foi acionado
 
-##### Funcionamento dos triggers
+#### Funcionamento dos triggers
 - Após a operação DML, o SQL Server invoca o trigger AFTER INSERT/UPDATE/DELETE.
 - O trigger lê as pseudo-tabelas inserted e deleted para capturar os valores antigos e novos.
 - Em seguida, escreve um registro na audit.ChangeLog com todas as informações necessárias.
@@ -160,7 +160,7 @@ WHERE TableName = 'ordens'
 ORDER BY ChangedAt DESC;
 ```
 
-##### Aplicação no Olist
+#### Aplicação no Olist
 
 1) Monitoramento de pedidos
 No contexto do Olist, cada alteração no ciclo de pedidos (criação, alteração de status, cancelamento) é capturada pelos triggers. Isso permite rastrear exatamente quem e quando modificou o status de entrega, datas de despacho ou até mesmo reprogramações, garantindo visibilidade total sobre o fluxo de venda e expedição.
@@ -185,7 +185,7 @@ Para garantir segurança, organização e eficiência no uso do banco de dados d
 - Facilitar auditorias e rastrear mudanças
 - Garantir que cada área de negócio trabalhe de forma independente, sem impactar a operação das demais
   
-##### Perfis de usuário
+#### Perfis de usuário
 
 1. Sales Analyst
 Papel: gerar relatórios de desempenho comercial, métricas de faturamento e tendências. – Permissões:
@@ -206,19 +206,19 @@ Papel: verificar a integridade do sistema e detectar inconsistências ou acessos
 
 #### 2.3 Estratégia de Backup e Replicação
 
-##### Estratégia de Backup
+#### Estratégia de Backup
 Nossa estratégia de backup foi projetada para garantir que nenhum dado sensível — como pedidos, pagamentos, informações de frete ou avaliações de clientes — seja perdido em caso de falha. Para um marketplace como a Olist, que processa milhares de transações diariamente, perder dados de um único dia pode significar um grave prejuízo financeiro e uma quebra irreparável de confiança com vendedores e clientes.
 
 * **Backup Completo:** Uma cópia completa de todos os dados do banco será realizada semanalmente. Este backup serve como a base mais segura para restaurações de grande escala.
 * **Backup Diferencial:** Para capturar as alterações diárias, serão realizados backups diferenciais todos os dias, durante a madrugada. Isso garante que, em caso de falha, possamos restaurar os dados com pouca ou nenhuma perda, utilizando o último backup completo mais o backup diferencial mais recente.
 
-##### Estratégia de Replicação Master-Slave
+#### Estratégia de Replicação Master-Slave
 A replicação é crucial para a alta disponibilidade e para a distribuição de carga de trabalho do banco de dados da Olist.
 
 * **Servidor Master:** Este servidor será o único responsável por todas as operações de escrita, como o processamento de novos pedidos. Isso assegura que a performance do sistema de checkout e registro de transações não seja impactada por outras atividades.
 * **Servidores Slaves:** As réplicas do banco de dados (slaves) terão a função de lidar com toda a carga de leitura. Isso é vital para a Olist, pois permite que consultas analíticas (como relatórios de vendas, desempenho de frete e análises de sazonalidade) sejam executadas sem sobrecarregar o servidor principal. Assim, a equipe de análise de dados pode trabalhar sem afetar a experiência do cliente que está comprando.
 
-##### Benefícios da Estratégia para o Marketplace Olist
+#### Benefícios da Estratégia para o Marketplace Olist
 * **Alta Disponibilidade e Continuidade do Negócio:** Para um marketplace nacional que conecta múltiplos vendedores e clientes, o tempo de inatividade significa vendas perdidas e insatisfação para toda a cadeia. A replicação garante que, se o servidor principal (master) cair, o site continue processando pedidos e exibindo o status de entrega, mantendo o negócio em funcionamento.
 * **Integridade e Disponibilidade dos Dados:** Graças a esta estratégia de backup e replicação, os dados do dataset Olist — incluindo pedidos, pagamentos e avaliações — permanecem íntegros e sempre disponíveis para serem usados em diferentes partes do seu trabalho, como:
 * **Auditoria:** Os logs de alterações podem ser consultados sem impactar a operação principal.
