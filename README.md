@@ -200,10 +200,13 @@ Papel: acompanhar o ciclo de entrega, marcar despachos e confirmar entregas. –
 - DENY em tabelas de pagamento e reviews, preservando a privacidade financeira. – Relacionamento com o Olist: integra as rotinas de expedição ao fluxo de vendas, garantindo que o estoque e o cliente sejam atualizados no momento certo.
 
 3. Auditor
-Papel: verificar a integridade do sistema e detectar inconsistências ou acessos indevidos. – Permissões:
-- SELECT exclusivo na tabela de logs (audit.ChangeLog).
-- DENY total nas tabelas operacionais, prevenindo até mesmo leituras diretas de dados transacionais. – Relacionamento com o Olist: monitora quem, quando e como os dados foram alterados, sustentando as práticas de governança e conformidade.
+Papel: Verificar a integridade do sistema e detectar inconsistências ou acessos indevidos por meio da análise de registros de atividade.
+Permissões:
+- SELECT exclusivo na tabela de logs audit.ChangeLog
+- SELECT nas views de auditoria em audit_views.*
+- DENY total (SELECT, INSERT, UPDATE, DELETE) em todas as tabelas operacionais
 
+Monitora quem, quando e como os dados foram alterados nos módulos de pedidos, pagamentos, produtos e avaliações, sustentando as práticas de governança, conformidade e rastreabilidade.
 
 #### 2.3 Estratégia de Backup e Replicação
 
