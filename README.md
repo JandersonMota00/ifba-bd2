@@ -236,7 +236,8 @@ Devido não possuir uma tabela de Log, será necesário criar.
     DELETE FROM olist_orders_dataset WHERE order_id = 'PEDIDO_TESTE_1';
     -- Vai gerar erro e impedir exclusão
     ```
->> IMAGEM
+    <img width="720" height="131" alt="image" src="https://github.com/user-attachments/assets/6ad0157b-c871-4b0d-b61b-4f91be20b486" />
+
 
 3. Trigger para Log de Mudança no Status do Pedido
     ```
