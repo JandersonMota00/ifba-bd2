@@ -1,9 +1,9 @@
 -- ========================================
--- Triggers for dbo.ordens
+-- Triggers for dbo.olist_orders_dataset
 -- ========================================
 
-CREATE OR ALTER TRIGGER dbo.tr_Ordens_Insert
-ON dbo.ordens
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Orders_Insert
+ON dbo.olist_orders_dataset
 AFTER INSERT
 AS
 BEGIN
@@ -13,7 +13,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'ordens',
+    'olist_orders_dataset',
     'I',
     i.order_id,
     'ALL',
@@ -33,8 +33,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Ordens_Update
-ON dbo.ordens
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Orders_Update
+ON dbo.olist_orders_dataset
 AFTER UPDATE
 AS
 BEGIN
@@ -44,7 +44,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'ordens',
+    'olist_orders_dataset',
     'U',
     i.order_id,
     v.ColumnName,
@@ -80,8 +80,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Ordens_Delete
-ON dbo.ordens
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Orders_Delete
+ON dbo.olist_orders_dataset
 AFTER DELETE
 AS
 BEGIN
@@ -91,7 +91,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'ordens',
+    'olist_orders_dataset',
     'D',
     d.order_id,
     'ALL',
@@ -109,4 +109,4 @@ BEGIN
     SYSUTCDATETIME()
   FROM deleted AS d;
 END;
-GO|
+GO

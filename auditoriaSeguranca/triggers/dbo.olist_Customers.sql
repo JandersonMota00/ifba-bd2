@@ -1,10 +1,9 @@
-
 -- ========================================
--- Triggers for dbo.olist_consumo
+-- Triggers for dbo.olist_customers_dataset
 -- ========================================
 
-CREATE OR ALTER TRIGGER dbo.tr_Olist_Consumo_Insert
-ON dbo.olist_consumo
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Customers_Insert
+ON dbo.olist_customers_dataset
 AFTER INSERT
 AS
 BEGIN
@@ -14,7 +13,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'olist_consumo',
+    'olist_customers_dataset',
     'I',
     i.customer_id,
     'ALL',
@@ -31,8 +30,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Olist_Consumo_Update
-ON dbo.olist_consumo
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Customers_Update
+ON dbo.olist_customers_dataset
 AFTER UPDATE
 AS
 BEGIN
@@ -42,7 +41,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'olist_consumo',
+    'olist_customers_dataset',
     'U',
     i.customer_id,
     v.ColumnName,
@@ -71,8 +70,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Olist_Consumo_Delete
-ON dbo.olist_consumo
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Customers_Delete
+ON dbo.olist_customers_dataset
 AFTER DELETE
 AS
 BEGIN
@@ -82,7 +81,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'olist_consumo',
+    'olist_customers_dataset',
     'D',
     d.customer_id,
     'ALL',

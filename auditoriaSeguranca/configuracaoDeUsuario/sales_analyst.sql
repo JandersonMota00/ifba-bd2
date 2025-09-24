@@ -23,25 +23,25 @@ ALTER ROLE db_sales_analyst ADD MEMBER SalesAnalystUser;
 GO
 
 -- 1.5 Conceder SELECT nas tabelas de análise
-GRANT SELECT ON dbo.ordens                            TO db_sales_analyst;
-GRANT SELECT ON dbo.ordensDePagamento                 TO db_sales_analyst;
-GRANT SELECT ON dbo.ordemItem                         TO db_sales_analyst;
-GRANT SELECT ON dbo.olist_order_reviews_dataset       TO db_sales_analyst;
-GRANT SELECT ON dbo.produtos                          TO db_sales_analyst;
-GRANT SELECT ON dbo.vendas                            TO db_sales_analyst;
-GRANT SELECT ON dbo.olist_consumo                     TO db_sales_analyst;
-GRANT SELECT ON dbo.geolocalizacao                    TO db_sales_analyst;
-GRANT SELECT ON dbo.product_category_name_translation TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_orders_dataset               TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_order_payments_dataset       TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_order_items_dataset          TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_products_dataset             TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_order_reviews_dataset        TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_customers_dataset            TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_sellers_dataset              TO db_sales_analyst;
+GRANT SELECT ON dbo.olist_geolocation_dataset          TO db_sales_analyst;
+GRANT SELECT ON dbo.product_category_name_translation  TO db_sales_analyst;
 GO
 
 -- 1.6 Negar qualquer modificação
-DENY INSERT, UPDATE, DELETE ON dbo.ordens                            TO db_sales_analyst;
-DENY INSERT, UPDATE, DELETE ON dbo.ordensDePagamento                 TO db_sales_analyst;
-DENY INSERT, UPDATE, DELETE ON dbo.ordemItem                         TO db_sales_analyst;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_orders_dataset              TO db_sales_analyst;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_order_payments_dataset      TO db_sales_analyst;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_order_items_dataset         TO db_sales_analyst;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_products_dataset            TO db_sales_analyst;
 DENY INSERT, UPDATE, DELETE ON dbo.olist_order_reviews_dataset       TO db_sales_analyst;
-DENY INSERT, UPDATE, DELETE ON dbo.produtos                          TO db_sales_analyst;
-DENY INSERT, UPDATE, DELETE ON dbo.vendas                            TO db_sales_analyst;
-DENY INSERT, UPDATE, DELETE ON dbo.olist_consumo                     TO db_sales_analyst;
-DENY INSERT, UPDATE, DELETE ON dbo.geolocalizacao                    TO db_sales_analyst;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_customers_dataset           TO db_sales_analyst;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_sellers_dataset             TO db_sales_analyst;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_geolocation_dataset         TO db_sales_analyst;
 DENY INSERT, UPDATE, DELETE ON dbo.product_category_name_translation TO db_sales_analyst;
 GO

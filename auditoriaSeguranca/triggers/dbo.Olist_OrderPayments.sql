@@ -1,10 +1,9 @@
-
 -- ========================================
--- Triggers for dbo.ordensDePagamento
+-- Triggers for dbo.olist_order_payments_dataset
 -- ========================================
 
-CREATE OR ALTER TRIGGER dbo.tr_OrdensDePagamento_Insert
-ON dbo.ordensDePagamento
+CREATE OR ALTER TRIGGER dbo.tr_Olist_OrderPayments_Insert
+ON dbo.olist_order_payments_dataset
 AFTER INSERT
 AS
 BEGIN
@@ -14,7 +13,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'ordensDePagamento',
+    'olist_order_payments_dataset',
     'I',
     CONCAT(i.order_id, '-', i.payment_sequential),
     'ALL',
@@ -31,8 +30,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_OrdensDePagamento_Update
-ON dbo.ordensDePagamento
+CREATE OR ALTER TRIGGER dbo.tr_Olist_OrderPayments_Update
+ON dbo.olist_order_payments_dataset
 AFTER UPDATE
 AS
 BEGIN
@@ -42,7 +41,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'ordensDePagamento',
+    'olist_order_payments_dataset',
     'U',
     CONCAT(i.order_id, '-', i.payment_sequential),
     v.ColumnName,
@@ -68,8 +67,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_OrdensDePagamento_Delete
-ON dbo.ordensDePagamento
+CREATE OR ALTER TRIGGER dbo.tr_Olist_OrderPayments_Delete
+ON dbo.olist_order_payments_dataset
 AFTER DELETE
 AS
 BEGIN
@@ -79,7 +78,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'ordensDePagamento',
+    'olist_order_payments_dataset',
     'D',
     CONCAT(d.order_id, '-', d.payment_sequential),
     'ALL',

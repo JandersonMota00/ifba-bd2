@@ -1,10 +1,9 @@
-
 -- ========================================
--- Triggers for dbo.produtos
+-- Triggers for dbo.olist_products_dataset
 -- ========================================
 
-CREATE OR ALTER TRIGGER dbo.tr_Produtos_Insert
-ON dbo.produtos
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Products_Insert
+ON dbo.olist_products_dataset
 AFTER INSERT
 AS
 BEGIN
@@ -14,15 +13,15 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'produtos',
+    'olist_products_dataset',
     'I',
     i.product_id,
     'ALL',
     NULL,
     CONCAT(
       'category=',           i.product_category_name,      '; ',
-      'name_length=',        i.product_name_length,        '; ',
-      'desc_length=',        i.product_description_length, '; ',
+      'name_length=',        i.product_name_lenght,        '; ',
+      'desc_length=',        i.product_description_lenght, '; ',
       'photos_qty=',         i.product_photos_qty,         '; ',
       'weight_g=',           FORMAT(i.product_weight_g,'N2'), '; ',
       'dimensions=', 
@@ -36,8 +35,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Produtos_Update
-ON dbo.produtos
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Products_Update
+ON dbo.olist_products_dataset
 AFTER UPDATE
 AS
 BEGIN
@@ -47,7 +46,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'produtos',
+    'olist_products_dataset',
     'U',
     i.product_id,
     v.ColumnName,
@@ -62,12 +61,12 @@ BEGIN
     ('product_category_name',
        d.product_category_name,
        i.product_category_name),
-    ('product_name_length',
-       CONVERT(NVARCHAR(10), d.product_name_length),
-       CONVERT(NVARCHAR(10), i.product_name_length)),
-    ('product_description_length',
-       CONVERT(NVARCHAR(10), d.product_description_length),
-       CONVERT(NVARCHAR(10), i.product_description_length)),
+    ('product_name_lenght',
+       CONVERT(NVARCHAR(10), d.product_name_lenght),
+       CONVERT(NVARCHAR(10), i.product_name_lenght)),
+    ('product_description_lenght',
+       CONVERT(NVARCHAR(10), d.product_description_lenght),
+       CONVERT(NVARCHAR(10), i.product_description_lenght)),
     ('product_photos_qty',
        CONVERT(NVARCHAR(10), d.product_photos_qty),
        CONVERT(NVARCHAR(10), i.product_photos_qty)),
@@ -88,8 +87,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Produtos_Delete
-ON dbo.produtos
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Products_Delete
+ON dbo.olist_products_dataset
 AFTER DELETE
 AS
 BEGIN
@@ -99,14 +98,14 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'produtos',
+    'olist_products_dataset',
     'D',
     d.product_id,
     'ALL',
     CONCAT(
       'category=',           d.product_category_name,      '; ',
-      'name_length=',        d.product_name_length,        '; ',
-      'desc_length=',        d.product_description_length, '; ',
+      'name_length=',        d.product_name_lenght,        '; ',
+      'desc_length=',        d.product_description_lenght, '; ',
       'photos_qty=',         d.product_photos_qty,         '; ',
       'weight_g=',           FORMAT(d.product_weight_g,'N2'), '; ',
       'dimensions=', 

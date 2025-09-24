@@ -25,18 +25,20 @@ ALTER ROLE db_logistics_operator ADD MEMBER LogisticsOperatorUser;
 GO
 
 -- 2.5 Permissões de leitura
-GRANT SELECT ON dbo.ordens       TO db_logistics_operator;
-GRANT SELECT ON dbo.ordemItem    TO db_logistics_operator;
-GRANT SELECT ON dbo.produtos     TO db_logistics_operator;
+GRANT SELECT ON dbo.olist_orders_dataset      TO db_logistics_operator;
+GRANT SELECT ON dbo.olist_order_items_dataset TO db_logistics_operator;
+GRANT SELECT ON dbo.olist_products_dataset    TO db_logistics_operator;
 
--- 2.6 Permissões de atualização apenas em dbo.ordens
+-- 2.6 Permissões de atualização apenas em campos de entrega
 GRANT UPDATE (order_delivered_carrier_date, order_delivered_customer_date)
-  ON dbo.ordens TO db_logistics_operator;
+  ON dbo.olist_orders_dataset TO db_logistics_operator;
 GO
 
 -- 2.7 Negar acesso a tabelas sensíveis
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.ordensDePagamento                 TO db_logistics_operator;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_order_reviews_dataset       TO db_logistics_operator;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_consumo                     TO db_logistics_operator;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_order_payments_dataset      TO db_logistics_operator;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_order_payments_dataset       TO db_logistics_operator;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_order_reviews_dataset        TO db_logistics_operator;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_customers_dataset            TO db_logistics_operator;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_sellers_dataset              TO db_logistics_operator;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_geolocation_dataset          TO db_logistics_operator;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.product_category_name_translation  TO db_logistics_operator;
 GO

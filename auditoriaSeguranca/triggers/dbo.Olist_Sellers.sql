@@ -1,10 +1,9 @@
-
 -- ========================================
--- Triggers for dbo.vendas
+-- Triggers for dbo.olist_sellers_dataset
 -- ========================================
 
-CREATE OR ALTER TRIGGER dbo.tr_Vendas_Insert
-ON dbo.vendas
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Sellers_Insert
+ON dbo.olist_sellers_dataset
 AFTER INSERT
 AS
 BEGIN
@@ -14,14 +13,14 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'vendas',
+    'olist_sellers_dataset',
     'I',
     i.seller_id,
     'ALL',
     NULL,
     CONCAT(
       'zip=',     FORMAT(i.seller_zip_code_prefix,'N0'), '; ',
-      'city=',    i.seller_city,                       '; ',
+      'city=',    i.seller_city,                          '; ',
       'state=',   i.seller_state
     ),
     SUSER_SNAME(),
@@ -30,8 +29,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Vendas_Update
-ON dbo.vendas
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Sellers_Update
+ON dbo.olist_sellers_dataset
 AFTER UPDATE
 AS
 BEGIN
@@ -41,7 +40,7 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'vendas',
+    'olist_sellers_dataset',
     'U',
     i.seller_id,
     v.ColumnName,
@@ -67,8 +66,8 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER TRIGGER dbo.tr_Vendas_Delete
-ON dbo.vendas
+CREATE OR ALTER TRIGGER dbo.tr_Olist_Sellers_Delete
+ON dbo.olist_sellers_dataset
 AFTER DELETE
 AS
 BEGIN
@@ -78,13 +77,13 @@ BEGIN
     (TableName, Operation, PrimaryKeyValue, ColumnName,
      OldValue, NewValue, ChangedBy, ChangedAt)
   SELECT
-    'vendas',
+    'olist_sellers_dataset',
     'D',
     d.seller_id,
     'ALL',
     CONCAT(
       'zip=',     FORMAT(d.seller_zip_code_prefix,'N0'), '; ',
-      'city=',    d.seller_city,                       '; ',
+      'city=',    d.seller_city,                          '; ',
       'state=',   d.seller_state
     ),
     NULL,
