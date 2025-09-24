@@ -22,18 +22,30 @@ GO
 ALTER ROLE db_auditor ADD MEMBER AuditorUser;
 GO
 
--- 3.5 Permissão de leitura apenas no log de auditoria
+-- 3.5 Permissão de leitura no log de auditoria
 GRANT SELECT ON audit.ChangeLog TO db_auditor;
 GO
 
--- 3.6 Negar acesso total às tabelas operacionais
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_consumo                     TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.geolocalizacao                    TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.ordemItem                         TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.ordens                            TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.ordensDePagamento                 TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.olist_order_reviews_dataset       TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.product_category_name_translation TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.produtos                          TO db_auditor;
-DENY SELECT, INSERT, UPDATE, DELETE ON dbo.vendas                            TO db_auditor;
+-- 3.6 Permissão de leitura em todas as tabelas operacionais
+GRANT SELECT ON dbo.olist_orders_dataset              TO db_auditor;
+GRANT SELECT ON dbo.olist_order_payments_dataset      TO db_auditor;
+GRANT SELECT ON dbo.olist_order_items_dataset         TO db_auditor;
+GRANT SELECT ON dbo.olist_products_dataset            TO db_auditor;
+GRANT SELECT ON dbo.olist_order_reviews_dataset       TO db_auditor;
+GRANT SELECT ON dbo.olist_customers_dataset           TO db_auditor;
+GRANT SELECT ON dbo.olist_sellers_dataset             TO db_auditor;
+GRANT SELECT ON dbo.olist_geolocation_dataset         TO db_auditor;
+GRANT SELECT ON dbo.product_category_name_translation TO db_auditor;
+GO
+
+-- 3.7 Negar qualquer modificação (garantia extra)
+DENY INSERT, UPDATE, DELETE ON dbo.olist_orders_dataset              TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_order_payments_dataset      TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_order_items_dataset         TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_products_dataset            TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_order_reviews_dataset       TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_customers_dataset           TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_sellers_dataset             TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.olist_geolocation_dataset         TO db_auditor;
+DENY INSERT, UPDATE, DELETE ON dbo.product_category_name_translation TO db_auditor;
 GO

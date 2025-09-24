@@ -419,14 +419,12 @@ Papel: acompanhar o ciclo de entrega, marcar despachos e confirmar entregas. –
 - DENY em tabelas de pagamento e reviews, preservando a privacidade financeira. – Relacionamento com o Olist: integra as rotinas de expedição ao fluxo de vendas, garantindo que o estoque e o cliente sejam atualizados no momento certo.
 
 3. Auditor
-Papel: Verificar a integridade do sistema e detectar inconsistências ou acessos indevidos por meio da análise de registros de atividade.
-Permissões:
-- SELECT exclusivo na tabela de logs audit.ChangeLog
-- SELECT nas views de auditoria em audit_views.*
-- DENY total (SELECT, INSERT, UPDATE, DELETE) em todas as tabelas operacionais
-
-Monitora quem, quando e como os dados foram alterados nos módulos de pedidos, pagamentos, produtos e avaliações, sustentando as práticas de governança, conformidade e rastreabilidade.
-
+Papel: Verificar a integridade do sistema e detectar inconsistências ou acessos indevidos por meio da análise de registros de atividade e cruzamento com os dados originais. - Permissões:
+- SELECT na tabela de logs audit.ChangeLog
+- SELECT em todas as tabelas operacionais (pedidos, pagamentos, produtos, avaliações, etc.)
+- DENY em INSERT, UPDATE e DELETE para garantir que o auditor não possa modificar os dados
+  
+Monitora quem, quando e como os dados foram alterados nos módulos de pedidos, pagamentos, produtos e avaliações, sustentando práticas de governança, conformidade e rastreabilidade.
 #### 2.3 Estratégia de Backup e Replicação
 
 #### Estratégia de Backup
@@ -449,3 +447,39 @@ A replicação é crucial para a alta disponibilidade e para a distribuição de
 * **Estudos de Comportamento do Consumidor:** Os dados históricos estarão sempre disponíveis para alimentar estudos sobre padrões de compra e previsões de demanda.
 .
 ### 3. Data Warehouse e OLAP
+
+Nesta etapa do projeto, o objetivo foi implementar um Data Warehouse para a Olist, utilizando um esquema dimensional em estrela (Star Schema). Esse modelo foi escolhido por ser amplamente utilizado em Business Intelligence, pois organiza os dados em tabelas dimensão e em uma tabela fato, o que facilita a execução de consultas rápidas e análises estratégicas.
+
+#### 3.1 Criação do Esquema Dimensional (Star Schema)
+- Foram criadas cinco dimensões: Tempo, Cliente, Produto, Vendedor e Pagamento.
+- No centro está a Tabela FatoVendas, que centraliza os dados de vendas e se conecta a todas as dimensões por meio de chaves estrangeiras.
+- Essa estrutura permite realizar análises a partir de diferentes perspectivas, como tempo, produto, região e cliente.
+
+#### 3.2 Processo de ETL (Extração, Transformação e Carga)
+
+- As dimensões foram populadas a partir das tabelas operacionais.
+- Na Dimensão Tempo, foram extraídos ano, mês e dia da data de compra.
+- Na Dimensão Produto, foram carregados atributos relevantes como categoria e preço.
+- A Tabela FatoVendas recebeu os dados integrados: cliente, produto, vendedor, forma de pagamento, quantidade e valor total.
+- O uso de comandos JOIN garantiu a ligação correta entre fatos e dimensões.
+
+#### 3.3 Consultas Analíticas (OLAP)
+- 1 – Faturamento Mensal por Categoria de Produto
+Consulta responsável por identificar o faturamento mensal de cada categoria de produto.
+Objetivo: analisar sazonalidade de vendas e apoiar o planejamento de estoque e marketing.
+
+- 2 – Tempo Médio de Entrega por Estado
+Consulta que calcula a média de dias entre a compra e a entrega por estado.
+Objetivo: identificar gargalos logísticos e otimizar processos de entrega.
+
+- 3 – Top 5 Vendedores por Faturamento Anual
+Consulta que retorna os cinco vendedores com maior faturamento anual.
+Objetivo: destacar os melhores desempenhos e estabelecer referências para comparação.
+
+Essas consultas foram selecionadas por sua relevância em resumir grandes volumes de dados de forma ágil e estratégica.
+
+#### 3.4 Benefícios para a Olist
+
+- Visão histórica consolidada: permite comparações entre diferentes períodos e identificação de tendências.
+- Consultas otimizadas: o modelo dimensional melhora o desempenho em consultas analíticas.
+- Suporte à decisão: os gestores têm acesso a relatórios estratégicos sobre vendas, logística e clientes.
