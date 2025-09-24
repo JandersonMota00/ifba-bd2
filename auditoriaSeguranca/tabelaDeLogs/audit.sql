@@ -6,6 +6,13 @@ IF NOT EXISTS (
 )
     EXEC('CREATE SCHEMA audit');
 GO
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.schemas
+    WHERE name = 'audit_views'
+)
+    EXEC('CREATE SCHEMA audit_views');
+GO
 
 -- Criar a tabela de logs de alterações
 CREATE TABLE audit.ChangeLog (
