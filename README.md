@@ -83,7 +83,7 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 
 ```Criacao
 
-CREATE DATABASE TrabalhoBD2
+CREATE DATABASE OlistStore
 
 ```
 
@@ -93,7 +93,7 @@ Em seguida "setar" o banco de dados
 
 
 ```Criacao
-USE [TrabalhoBD2]
+USE OlistStore
 
 ```
 
