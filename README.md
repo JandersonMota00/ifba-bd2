@@ -120,11 +120,228 @@ GO
 
 ```
 
-#### 1.2. Normalização 
+#### 1.1.1. Normalização 
 
 <img width="720" height="662" alt="image" src="https://github.com/user-attachments/assets/9a04c850-63a1-4588-a363-a89d4794cd26" />
 
 A imagem anterior descreve a modelagem do banco de e suas possivels relações. Entretanto, observando os dados, nos tempos possiveis inconsistências no que tange a duplicidade dos dados. Nesse sentido, tendo em vista que a natureza destes dados não afetam consideravelmente o datasheet, é realizada a exclusão destes dados.
+
+#### 1.2. Implementação
+Implementação de **_procedure_** usando a `tabela olist_products_dataset`.
+
+1. Listar todos os produtos
+    ```
+    CREATE PROCEDURE ListarProdutos
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT TOP 50 *
+        FROM olist_products_dataset
+        ORDER BY product_id;
+    END;
+
+    -- Executar
+    EXEC ListarProdutos;
+    ```
+
+2. Buscar produtos por categoria
+    ```
+    CREATE PROCEDURE BuscarProdutosPorCategoria
+        @Categoria NVARCHAR(100)
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT product_id, product_category_name, product_weight_g, product_length_cm, product_height_cm, product_width_cm
+        FROM olist_products_dataset
+        WHERE product_category_name = @Categoria;
+    END;
+
+    -- Executar
+    EXEC BuscarProdutosPorCategoria @Categoria = 'perfumaria';
+    ```
+
+3. Contar produtos por categoria (com parâmetro de saída)
+    ```
+    CREATE PROCEDURE ContarProdutosPorCategoria
+        @Categoria NVARCHAR(100),
+        @Qtd INT OUTPUT
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT @Qtd = COUNT(*)
+        FROM olist_products_dataset
+        WHERE product_category_name = @Categoria;
+    END;
+
+    -- Executar
+    DECLARE @Total INT;
+    EXEC ContarProdutosPorCategoria @Categoria = 'perfumaria', @Qtd = @Total OUTPUT;
+    PRINT 'Total de produtos: ' + CAST(@Total AS VARCHAR);
+    ```
+
+4. Top categorias com mais produtos
+    ```
+    CREATE PROCEDURE TopCategoriasProdutos
+        @TopN INT = 10
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT TOP (@TopN) product_category_name, COUNT(*) AS qtd_produtos
+        FROM olist_products_dataset
+        GROUP BY product_category_name
+        ORDER BY qtd_produtos DESC;
+    END;
+
+    -- Executar
+    EXEC TopCategoriasProdutos @TopN = 5;
+    ```
+
+Implementação de **_triggers_** usando a tabela `olist_orders_dataset`.
+
+Devido não possuir uma tabela de Log, será necesário criar.
+
+1. Trigger para Log de Novos Pedidos
+    ```
+    -- Criação da tabela de log para registrar cada pedido novo.
+    CREATE TABLE Log_NovosPedidos (
+        log_id INT IDENTITY PRIMARY KEY,
+        order_id NVARCHAR(50),
+        customer_id NVARCHAR(50),
+        data_insercao DATETIME DEFAULT GETDATE()
+    );
+
+    -- Trigger
+    INSERT INTO olist_orders_dataset (order_id, customer_id, order_status, order_purchase_timestamp, order_estimated_delivery_date)
+    VALUES ('PEDIDO_TESTE_1', '000379cdec625522490c315e70c7a9fb', 'created', GETDATE(), DATEADD(DAY, 10, GETDATE()));
+
+    SELECT * FROM Log_NovosPedidos;
+    ```
+
+2. Trigger para Bloquear Exclusão de Pedidos
+    ```
+    -- Nenhum pedido poderá ser deletado diretamente.
+    CREATE TRIGGER trg_BloquearDeletePedido
+    ON olist_orders_dataset
+    INSTEAD OF DELETE
+    AS
+    BEGIN
+        RAISERROR ('Exclusão de pedidos não é permitida!', 16, 1);
+    END;
+
+    -- Trigger
+    DELETE FROM olist_orders_dataset WHERE order_id = 'PEDIDO_TESTE_1';
+    -- Vai gerar erro e impedir exclusão
+    ```
+>> IMAGEM
+
+3. Trigger para Log de Mudança no Status do Pedido
+    ```
+    -- Criaremos uma tabela de log:
+    CREATE TABLE Log_StatusPedido (
+        log_id INT IDENTITY PRIMARY KEY,
+        order_id NVARCHAR(50),
+        status_antigo NVARCHAR(50),
+        status_novo NVARCHAR(50),
+        data_alteracao DATETIME DEFAULT GETDATE()
+    );
+
+    -- Trigger
+    CREATE TRIGGER trg_LogAlteracaoStatus
+    ON olist_orders_dataset
+    AFTER UPDATE
+    AS
+    BEGIN
+        INSERT INTO Log_StatusPedido (order_id, status_antigo, status_novo)
+        SELECT d.order_id, d.order_status, i.order_status
+        FROM DELETED d
+        JOIN INSERTED i ON d.order_id = i.order_id
+        WHERE d.order_status <> i.order_status;
+    END;
+
+    -- Teste
+    UPDATE olist_orders_dataset
+    SET order_status = 'shipped'
+    WHERE order_id = 'PEDIDO_TESTE_1';
+
+    SELECT * FROM Log_StatusPedido;
+    ```
+
+4. Trigger para Garantir que a Data de Entrega Não Seja Antes da Data de Compra
+    ```
+    CREATE TRIGGER trg_ValidarDataEntrega
+    ON olist_orders_dataset
+    AFTER INSERT, UPDATE
+    AS
+    BEGIN
+        IF EXISTS (
+            SELECT 1
+            FROM INSERTED
+            WHERE order_delivered_customer_date < order_purchase_timestamp
+        )
+        BEGIN
+            RAISERROR ('A data de entrega não pode ser antes da data de compra!', 16, 1);
+            ROLLBACK TRANSACTION;
+        END
+    END;
+    ```
+
+Implementação de **_functions_**.
+
+Função que retorna todos os pedidos de um cliente.
+```
+CREATE FUNCTION fn_PedidosPorCliente (@customer_id VARCHAR(50))
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT order_id, order_status, order_purchase_timestamp
+    FROM olist_orders_dataset
+    WHERE customer_id = @customer_id
+);
+GO
+
+SELECT * FROM dbo.fn_PedidosPorCliente('000379cdec625522490c315e70c7a9fb');
+```
+
+Implementação de **_transaction_**.
+
+Inserir pedido e pagamento juntos. Se o pedido falhar, o pagamento também não entra.
+```
+BEGIN TRANSACTION;
+
+BEGIN TRY
+    -- Inserindo pedido
+    INSERT INTO olist_orders_dataset (
+        order_id, customer_id, order_status,
+        order_purchase_timestamp, order_estimated_delivery_date
+    )
+    VALUES (
+        'PEDIDO_TX1', '000379cdec625522490c315e70c7a9fb',
+        'created', GETDATE(), DATEADD(DAY, 10, GETDATE())
+    );
+
+    -- Inserindo pagamento (incluindo installments)
+    INSERT INTO olist_order_payments_dataset (
+        order_id, payment_sequential, payment_type, payment_installments, payment_value
+    )
+    VALUES (
+        'PEDIDO_TX1', 1, 'credit_card', 1, 250.00
+    );
+
+    -- Confirma as duas operações
+    COMMIT TRANSACTION;
+    PRINT 'Transação concluída com sucesso!';
+END TRY
+BEGIN CATCH
+    -- Se der erro em qualquer uma, desfaz tudo
+    ROLLBACK TRANSACTION;
+    PRINT 'Erro: ' + ERROR_MESSAGE();
+END CATCH;
+```
 
 ---
 
