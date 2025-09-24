@@ -66,7 +66,7 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 |`./datasheets` | **Diretorio que contem os datasheets base** |
 |`./modelagemInplementacao/modelagem` | **Diretorio que contem os scripts de modelagem do banco e inserção via BurkInsert** |
 |`./auditoriaSeguranca`| **Diretorio que contem os pacotes com as configurações de usuários,tabela de logs e triggers das tabelas principais do fluxo operacional do Olist**|
-
+|`./dataWarehouseAndOlap`| **Diretorio que contem os pacotes com as configurações de Data Warehouse e OLAP**|
 
 ---
 
