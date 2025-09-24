@@ -73,6 +73,7 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 ## Itens
 
 ### 1. Modelagem e Implementação
+🔗 Link do BD com modelagem e implementação: https://drive.google.com/file/d/1iywdigBeTrRxSMBdAVWPx1Kcl_TRuelf/view?usp=sharing
 
 #### 1.1. Modelagem 
 
