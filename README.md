@@ -76,6 +76,8 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 
 #### 1.1. Modelagem 
 
+🔗 Link do BD modelado: https://drive.google.com/file/d/1RY4DBAFp7MTFFtB8spdXCPxbo46iinaU/view?usp=sharing
+
 - Mediante downloads dos datasheets necessarios para realizar a tarefa de modelar e implementar, é necessario inicialmente criar um banco de dados e subir os todas
 
 ```Criacao
@@ -120,7 +122,7 @@ GO
 
 #### 1.2. Normalização 
 
-![Modelagem Relacional Banco De Dados](../ifba-bd2/modelagemInplementacao/diagramaRelacionalBancoDeDados/Diagrama%20Relacional%20do%20Banco%20de%20Dados.png)
+<img width="720" height="662" alt="image" src="https://github.com/user-attachments/assets/9a04c850-63a1-4588-a363-a89d4794cd26" />
 
 A imagem anterior descreve a modelagem do banco de e suas possivels relações. Entretanto, observando os dados, nos tempos possiveis inconsistências no que tange a duplicidade dos dados. Nesse sentido, tendo em vista que a natureza destes dados não afetam consideravelmente o datasheet, é realizada a exclusão destes dados.
 
