@@ -233,7 +233,7 @@ A replicação é crucial para a alta disponibilidade e para a distribuição de
 
 Nesta etapa do projeto, o objetivo foi implementar um Data Warehouse para a Olist, utilizando um esquema dimensional em estrela (Star Schema). Esse modelo foi escolhido por ser amplamente utilizado em Business Intelligence, pois organiza os dados em tabelas dimensão e em uma tabela fato, o que facilita a execução de consultas rápidas e análises estratégicas.
 
-#### 3.2 Criação do Esquema Dimensional (Star Schema)
+#### 3.1 Criação do Esquema Dimensional (Star Schema)
 - Foram criadas cinco dimensões: Tempo, Cliente, Produto, Vendedor e Pagamento.
 - No centro está a Tabela FatoVendas, que centraliza os dados de vendas e se conecta a todas as dimensões por meio de chaves estrangeiras.
 - Essa estrutura permite realizar análises a partir de diferentes perspectivas, como tempo, produto, região e cliente.
