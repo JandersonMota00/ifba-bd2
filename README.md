@@ -233,12 +233,12 @@ A replicação é crucial para a alta disponibilidade e para a distribuição de
 
 Nesta etapa do projeto, o objetivo foi implementar um Data Warehouse para a Olist, utilizando um esquema dimensional em estrela (Star Schema). Esse modelo foi escolhido por ser amplamente utilizado em Business Intelligence, pois organiza os dados em tabelas dimensão e em uma tabela fato, o que facilita a execução de consultas rápidas e análises estratégicas.
 
-#### Criação do Esquema Dimensional (Star Schema)
+#### 3.2 Criação do Esquema Dimensional (Star Schema)
 - Foram criadas cinco dimensões: Tempo, Cliente, Produto, Vendedor e Pagamento.
 - No centro está a Tabela FatoVendas, que centraliza os dados de vendas e se conecta a todas as dimensões por meio de chaves estrangeiras.
 - Essa estrutura permite realizar análises a partir de diferentes perspectivas, como tempo, produto, região e cliente.
 
-#### Processo de ETL (Extração, Transformação e Carga)
+#### 3.2 Processo de ETL (Extração, Transformação e Carga)
 
 - As dimensões foram populadas a partir das tabelas operacionais.
 - Na Dimensão Tempo, foram extraídos ano, mês e dia da data de compra.
@@ -246,22 +246,22 @@ Nesta etapa do projeto, o objetivo foi implementar um Data Warehouse para a Olis
 - A Tabela FatoVendas recebeu os dados integrados: cliente, produto, vendedor, forma de pagamento, quantidade e valor total.
 - O uso de comandos JOIN garantiu a ligação correta entre fatos e dimensões.
 
-#### Consultas Analíticas (OLAP)
-- 3.1 – Faturamento Mensal por Categoria de Produto
+#### 3.3 Consultas Analíticas (OLAP)
+- 1 – Faturamento Mensal por Categoria de Produto
 Consulta responsável por identificar o faturamento mensal de cada categoria de produto.
 Objetivo: analisar sazonalidade de vendas e apoiar o planejamento de estoque e marketing.
 
-- 3.2 – Tempo Médio de Entrega por Estado
+- 2 – Tempo Médio de Entrega por Estado
 Consulta que calcula a média de dias entre a compra e a entrega por estado.
 Objetivo: identificar gargalos logísticos e otimizar processos de entrega.
 
-- 3.3 – Top 5 Vendedores por Faturamento Anual
+- 3 – Top 5 Vendedores por Faturamento Anual
 Consulta que retorna os cinco vendedores com maior faturamento anual.
 Objetivo: destacar os melhores desempenhos e estabelecer referências para comparação.
 
 Essas consultas foram selecionadas por sua relevância em resumir grandes volumes de dados de forma ágil e estratégica.
 
-#### Benefícios para a Olist
+#### 3.4 Benefícios para a Olist
 
 - Visão histórica consolidada: permite comparações entre diferentes períodos e identificação de tendências.
 - Consultas otimizadas: o modelo dimensional melhora o desempenho em consultas analíticas.
