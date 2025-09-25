@@ -139,6 +139,11 @@ GO
 
 A imagem anterior descreve a modelagem do banco de e suas possivels relações. Entretanto, observando os dados, nos tempos possiveis inconsistências no que tange a duplicidade dos dados. Nesse sentido, tendo em vista que a natureza destes dados não afetam consideravelmente o datasheet, é realizada a exclusão destes dados.
 
+Partindo do principio da normalização, a implementação consistem em aplicar Procedure, Trigger, Functions e Transações para a realização do restante das implementações.
+ 
+ **Procedures**
+As procedures - comumente confundidas pelas functions, executam uma sequência de instruções ou operações, incluindo a manipulação de dados. È aplicavel quando a logica de calculos, fica a cargo do banco de dados.
+
 #### 1.2. Implementação
 Implementação de **_procedure_** usando a `tabela olist_products_dataset`.
 
@@ -216,6 +221,10 @@ Implementação de **_procedure_** usando a `tabela olist_products_dataset`.
 Implementação de **_triggers_** usando a tabela `olist_orders_dataset`.
 
 Devido não possuir uma tabela de Log, será necesário criar.
+
+**Triggers**
+
+No caso das triggers, são eventos disparados no banco ao reaizar operações de Insert, Delete, Create. Tais eventos, agregam melhorias e otmizações ao banco de modo a não só automatizar operações de tratamento de dados, como tambem, manter a integridade dos mesmos evitando desnormalizações, incosistências e falhas.
 
 1. Trigger para Log de Novos Pedidos
     ```
@@ -302,6 +311,9 @@ Devido não possuir uma tabela de Log, será necesário criar.
         END
     END;
     ```
+
+Ja as functions são realizadas com o obejetivo de retorno de valores Ja as Transactions cujo objetivo é garantir a integridade dos dados durante operações que envolvem múltiplas etapas, garantem a sincronia e harmonia entre as operações evitando dados inconsistentes entre cada etapa.
+
 
 Implementação de **_functions_**.
 
