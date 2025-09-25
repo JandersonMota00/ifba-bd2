@@ -43,6 +43,9 @@
 
 [Trabalho BD2.pdf](https://github.com/user-attachments/files/21988418/Trabalho.BD2.pdf)
 
+## Slide
+https://www.canva.com/design/DAGz7_fYi70/efVlkO9yB_oXKksg1Hvk3w/edit?utm_content=DAGz7_fYi70&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ## Sobre o projeto
 
 Este trabalho se apoia no Brazilian E-Commerce Public Dataset, publicado pela Olist, contendo mais de 100 mil pedidos realizados entre 2016 e 2018 nos marketplaces brasileiros. A profundidade do dataset — com atributos como status do pedido, preço, pagamento, desempenho do frete, localização do cliente, atributos do produto e avaliações, revela um ecossistema rico e minuncioso o qual fundamenta o estudo.
