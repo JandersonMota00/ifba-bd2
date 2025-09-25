@@ -75,6 +75,12 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 
   🔗 Link: https://drive.google.com/file/d/1Jts56bWFwubuSllEhbz6hZVWV8IW5Aq3/view?usp=sharing
 
+- Modelagem e Implementação + Auditoria e Segurança + Data Warehouse e OLAP
+
+  🔗 Link .ipynb: https://drive.google.com/file/d/1-l--6IYpHkUx-CPoYv6_AK1Ed8WweHWI/view?usp=sharing
+  
+  🔗 Link .sql: https://drive.google.com/file/d/1SJ13sdOFbeN1-K4iid0YAe-0sVFAjWBC/view?usp=sharing
+
 ## Estrutura do Repositorio
 
 | Diretório | Descricao |
