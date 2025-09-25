@@ -51,7 +51,9 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 
 🔗 Link do dataset: [Brazilian E-Commerce Olist - Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce?select=olist_customers_dataset.csv)
 
----
+## Tabela inicial do dataset Olist
+<img width="1526" height="797" alt="Tabelas do banco inicial" src="https://github.com/user-attachments/assets/4c182f1b-1bfb-4118-924c-15f4c8780e22" />
+
 
 ## Ferramentas
 - SQL Server
