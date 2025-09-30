@@ -8,8 +8,6 @@
 - **Semestre:** 5
 - **Ano:** 2025.1
 
----
-
 ## Integrantes do Projeto
 
 <table>
@@ -37,14 +35,13 @@
   </tr>
 </table>
 
----
-
 ## Lista
 
 [Trabalho BD2.pdf](https://github.com/user-attachments/files/21988418/Trabalho.BD2.pdf)
 
 ## Slide
-https://www.canva.com/design/DAGz7_fYi70/efVlkO9yB_oXKksg1Hvk3w/edit?utm_content=DAGz7_fYi70&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+[Slide: Brazilian E-Commerce Public Dataset.pptx](https://github.com/user-attachments/files/22618554/Brazilian.E-Commerce.Public.Dataset.pptx)
 
 ## Sobre o projeto
 
@@ -55,8 +52,8 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 🔗 Link do dataset: [Brazilian E-Commerce Olist - Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce?select=olist_customers_dataset.csv)
 
 ## Tabela inicial do dataset Olist
-<img width="1526" height="797" alt="Tabelas do banco inicial" src="https://github.com/user-attachments/assets/4c182f1b-1bfb-4118-924c-15f4c8780e22" />
 
+<img width="1526" height="797" alt="Tabelas do banco inicial" src="https://github.com/user-attachments/assets/4c182f1b-1bfb-4118-924c-15f4c8780e22" />
 
 ## Ferramentas
 - SQL Server
@@ -89,8 +86,6 @@ Nesse sentido, é possivel analisar padrões temporais como fluxo e volume de pe
 |`./modelagemInplementacao/modelagem` | **Diretorio que contem os scripts de modelagem do banco e inserção via BurkInsert** |
 |`./auditoriaSeguranca`| **Diretorio que contem os pacotes com as configurações de usuários,tabela de logs e triggers das tabelas principais do fluxo operacional do Olist**|
 |`./dataWarehouseAndOlap`| **Diretorio que contem os pacotes com as configurações de Data Warehouse e OLAP**|
-
----
 
 ## Itens
 
@@ -477,7 +472,9 @@ A replicação é crucial para a alta disponibilidade e para a distribuição de
 * **Auditoria:** Os logs de alterações podem ser consultados sem impactar a operação principal.
 * **Análises OLAP:** As consultas complexas para o seu Data Warehouse podem ser executadas nos servidores slaves, garantindo que a análise não interfira no processamento de novos pedidos.
 * **Estudos de Comportamento do Consumidor:** Os dados históricos estarão sempre disponíveis para alimentar estudos sobre padrões de compra e previsões de demanda.
-.
+
+---
+
 ### 3. Data Warehouse e OLAP
 
 Nesta etapa do projeto, o objetivo foi implementar um Data Warehouse para a Olist, utilizando um esquema dimensional em estrela (Star Schema). Esse modelo foi escolhido por ser amplamente utilizado em Business Intelligence, pois organiza os dados em tabelas dimensão e em uma tabela fato, o que facilita a execução de consultas rápidas e análises estratégicas.
