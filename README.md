@@ -496,3 +496,9 @@ Essas consultas foram selecionadas por sua relevância em resumir grandes volume
 - Visão histórica consolidada: permite comparações entre diferentes períodos e identificação de tendências.
 - Consultas otimizadas: o modelo dimensional melhora o desempenho em consultas analíticas.
 - Suporte à decisão: os gestores têm acesso a relatórios estratégicos sobre vendas, logística e clientes.
+
+# Avaliação do professor
+**Nota:** 3.5/4.0
+## Erros:
+- Usar uma PK como varchar/nvarchar;
+- e as consultas OLAP foram bem simples, não traziam grande imapcto e não houve explicações correlacionando com as tecnicas.
